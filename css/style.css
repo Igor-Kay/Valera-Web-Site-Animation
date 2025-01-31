@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+#animateButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+header {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.main-text {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  color: white;
+  mix-blend-mode: difference;
+  text-align: center;
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.46px;
+  text-transform: uppercase;
+}
+
+
