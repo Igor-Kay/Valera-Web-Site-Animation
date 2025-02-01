@@ -15,7 +15,7 @@ export class RectanglePlane {
     console.log("width: ", this.width);
 
     this.video = document.createElement("video");
-    this.video.src = "../assets/desig-show-real.mp4";
+    this.video.src = "/assets/desig-show-real.mp4";
     this.video.load();
     this.video.muted = true;
     this.video.play();
