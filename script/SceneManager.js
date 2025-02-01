@@ -8,7 +8,7 @@ export class SceneManager {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      10000
     );
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
 
@@ -20,20 +20,17 @@ export class SceneManager {
     this.renderer.setClearColor(0xffffff);
     document.body.appendChild(this.renderer.domElement);
 
-    this.camera.position.set(0, 0, 700);
-    this.camera.rotation.set(0, 0, 0);
-
-    const light = new THREE.AmbientLight(0xffffff, 1.5);
-    this.scene.add(light);
-
-    this.scene.add(new THREE.AxesHelper(5));
-
     this.rectanglePlane = new RectanglePlane(
       window.innerWidth,
       window.innerHeight,
       0x808080
     );
     this.scene.add(this.rectanglePlane.getMesh());
+
+    this.adjustCamera();
+    
+    const light = new THREE.AmbientLight(0xffffff, 1.5);
+    this.scene.add(light);
 
     window.addEventListener("resize", () => this.onWindowResize(), false);
     this.animate();
@@ -44,12 +41,18 @@ export class SceneManager {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.rectanglePlane = new RectanglePlane(
-      window.innerWidth,
-      window.innerHeight,
-      0x808080
-    );
-    this.scene.add(this.rectanglePlane.getMesh());
+    this.adjustCamera();
+  }
+
+  adjustCamera() {
+    const width = this.rectanglePlane.width;
+    const height = this.rectanglePlane.height;
+
+    const fovRad = (this.camera.fov * Math.PI) / 180;
+    const distance = height / 2 / Math.tan(fovRad / 2);
+
+    this.camera.position.set(0, 0, distance);
+    this.camera.lookAt(0, 0, 0);
   }
 
   animate() {
@@ -58,14 +61,6 @@ export class SceneManager {
   }
 
   async animatePlaneUp() {
-    const targetY = 0;
-    const targetRotation = 0;
-    const duration = 1000;
-
-    await this.rectanglePlane.animateToPosition(
-      targetY,
-      targetRotation,
-      duration
-    );
+    await this.rectanglePlane.animateRotateAndMoveAndScale();
   }
 }
